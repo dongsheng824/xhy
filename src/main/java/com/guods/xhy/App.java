@@ -17,17 +17,15 @@ public class App
 		
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				new MainView();
+				new MainView2();
 			}
 		});
-//		String[] columnNames = {"name1", "name2"};
-//		Excel excel = new Excel("D:\\updatedata\\", "result.xlsx", "sheet1", columnNames);
+		
+//		String url = "http://www.weixinyunduan.com/admin/baseService/keyword_1.html";
+//		String cookies = "ip=115.193.215.234%2C%20220.170.185.662017/10/24rqxhy; __cfduid=d1373a2d489af65379a433ff09dcaab8e1508721371; FENBOT_fingerprint=1508721358458; Hm_lvt_117891647dedd0fc47d164808222f820=1508726517,1508727074,1508727534; PHPSESSID=mf21avq6k79g0r2pgn3210hok1; WXuser=rqxhy; uid=459009; uuid=fb2e13ec05240b8c995175e4639838ac; yunsuo_session_verify=0bfcba3456eabc3dd90ef4648cd06c7b";
 //		Client client = new Client();
-//		Result loginPost = client.loginPost("http://www.yunhuiyuan.cn/", "dcwlkj", "dfcf182838");
-//		Document document = client.dataGet("http://www.yunhuiyuan.cn/Manage/WeChat/SetReplyKeyWord?pageIndex=2", loginPost.getCookies());
-//		System.out.println(document);
-//		parsePate(document, excel);
-//		excel.saveFile();
+//		client.getContent(url, cookies);
+		
     }
     
 //	private static void parsePate(Document document, Excel excel){

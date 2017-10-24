@@ -118,7 +118,7 @@ public class Excel {
 	/**
 	 * excel文件存储到磁盘
 	 */
-	public void saveFile(){
+	public String saveFile(){
 		try {
 			File fileDir = new File(filePath);
 			File file = new File(filePath + fileName);
@@ -131,12 +131,11 @@ public class Excel {
 			file.createNewFile();
 			FileOutputStream fileOutputStream = new FileOutputStream(file);
 			workbook.write(fileOutputStream);
+			return "success";
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			System.out.println(filePath + fileName + "保存文件错误:" + e.getMessage());
+			return filePath + fileName + "保存文件错误:" + e.getMessage();
 		} catch (IOException e) {
-			e.printStackTrace();
-			System.out.println(filePath + fileName + "保存文件错误:" + e.getMessage());
+			return filePath + fileName + "保存文件错误:" + e.getMessage();
 		}
 	}
 	/**

@@ -18,14 +18,12 @@ import javax.swing.JTextField;
 public class MainView2 extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField filePath, fileName;
+	private JTextField filePath, fileName, delay;
 	private JButton updateButton, exportButton;
 	private JTextArea outPut, cookies;
 	private JScrollPane scroll, cookieScroll;
 	private Client client;
-	private Result loginResult;
 	
-	private static final String LOGIN_URL = "http://www.weixinyunduan.com/login.html?uid=459009&upwd=34294a04d74b311d42006b664f1c6606";
 	public static final String UPDATE_URL_PRE = "http://www.weixinyunduan.com/admin/baseService/ajax2-";
 	public static final String URL_HTML = ".html";
 	public static final String GET_URL_PRE = "http://www.weixinyunduan.com/admin/baseService/keyword_";
@@ -50,6 +48,8 @@ public class MainView2 extends JFrame {
 		filePath.setEditable(false);
 		fileName = new JTextField(20);
 		fileName.setText("content2.xlsx");
+		delay = new JTextField(20);
+		delay.setText("1");
 		updateButton = new JButton("更新数据");
 		updateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -90,12 +90,16 @@ public class MainView2 extends JFrame {
 		box = Box.createHorizontalBox();
 		labelBox = Box.createVerticalBox();
 		labelBox.add(new JLabel("cookies："));
-		labelBox.add(Box.createVerticalStrut(30));
+		labelBox.add(Box.createVerticalStrut(70));
+		labelBox.add(new JLabel("延时（秒）："));
+		labelBox.add(Box.createVerticalStrut(20));
 		labelBox.add(new JLabel("数据文件夹："));
-		labelBox.add(Box.createVerticalStrut(30));
+		labelBox.add(Box.createVerticalStrut(20));
 		labelBox.add(new JLabel("数据文件名："));
 		textBox = Box.createVerticalBox();
 		textBox.add(cookieScroll);
+		textBox.add(Box.createVerticalStrut(8));
+		textBox.add(delay);
 		textBox.add(Box.createVerticalStrut(8));
 		textBox.add(filePath);
 		textBox.add(Box.createVerticalStrut(8));
@@ -123,6 +127,12 @@ public class MainView2 extends JFrame {
 	}
 	
 	private void updateData(String cookies){
+		Long delayTime = 0L;
+		if (delay.getText() == null) {
+			delayTime = 0L;
+		}else {
+			delayTime = new Long(delay.getText()) * 1000;
+		}
 		if (cookies == null || "".equals(cookies)) {
 			outPut.setText(outPut.getText() + System.lineSeparator() + "cookie不能为空!");
 			outPut.paintImmediately(getBounds());
@@ -144,6 +154,10 @@ public class MainView2 extends JFrame {
 					outPut.setText(outPut.getText() + System.lineSeparator() + excel.readUnit(i, 2) + ":success");
 					outPut.paintImmediately(getBounds());
 				}
+				try {
+					Thread.sleep(delayTime);
+				} catch (InterruptedException e) {
+				}
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
@@ -155,6 +169,12 @@ public class MainView2 extends JFrame {
 	private void exportData(String cookies){
 		String url;
 		List<String[]> contentList;
+		Long delayTime = 0L;
+		if (delay.getText() == null) {
+			delayTime = 0L;
+		}else {
+			delayTime = new Long(delay.getText()) * 1000;
+		}
 		if (cookies == null || "".equals(cookies)) {
 			outPut.setText(outPut.getText() + System.lineSeparator() + "cookie不能为空!");
 			outPut.paintImmediately(getBounds());
@@ -173,6 +193,10 @@ public class MainView2 extends JFrame {
 			}
 			outPut.setText(outPut.getText() + System.lineSeparator() + "第" + i + "页导出完成");
 			outPut.paintImmediately(getBounds());
+			try {
+				Thread.sleep(delayTime);
+			} catch (InterruptedException e) {
+			}
 		}
 		String saveResult = excel.saveFile();
 		outPut.setText(outPut.getText() + System.lineSeparator() + saveResult);
